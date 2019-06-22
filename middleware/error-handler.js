@@ -1,5 +1,6 @@
 module.exports = errorHandler;
 
+// eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
   if (typeof (err) === 'string') {
     // custom application error
@@ -7,10 +8,11 @@ function errorHandler(err, req, res, next) {
   }
 
   if (err.name === 'ValidationError') {
-    // mongoose validation error
+    // Sequalize validation error
     return res.status(400).json({ message: err.message });
   }
 
+  // will handle jwt error when we have jwt layer inforced as middleware.
   if (err.name === 'UnauthorizedError') {
     // jwt authentication error
     return res.status(401).json({ message: 'Invalid Token' });
