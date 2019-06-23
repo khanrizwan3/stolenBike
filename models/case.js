@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   // eslint-disable-next-line no-unused-vars
   Case.associate = function(models) {
     // associations can be defined here
+    Case.hasOne(models.User, { foreignKey: 'initiator_id' });
   };
   return Case;
 };
