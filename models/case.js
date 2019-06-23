@@ -6,7 +6,28 @@ module.exports = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     time_of_theft: DataTypes.STRING,
     victim_id: DataTypes.INTEGER,
-    officer_id: DataTypes.INTEGER,
+    officer_id: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isUnique: function (value, next) {
+          if (value) {
+            Case.findOne({ where: { officer_id: value }})
+              .then(function (data) {
+                if (data) {
+                  next('Already taken');
+                } else {
+                  next();
+                }
+              })
+              .error(function (err) {
+                next(err.message);
+              });
+          } else {
+            next('String is empty');
+          }
+        }
+      }
+    },
     status: DataTypes.INTEGER
   }, {});
   // eslint-disable-next-line no-unused-vars
