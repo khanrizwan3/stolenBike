@@ -28,12 +28,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    status: DataTypes.INTEGER
+    status: DataTypes.INTEGER,
+    status_reason: DataTypes.STRING,
   }, {});
   // eslint-disable-next-line no-unused-vars
   Case.associate = function(models) {
     // associations can be defined here
-    Case.hasOne(models.User, { foreignKey: 'initiator_id' });
+    Case.belongsTo(models.User, {
+      foreignKey: {
+        name: 'officer_id',
+      }
+    });
+    
   };
   return Case;
 };

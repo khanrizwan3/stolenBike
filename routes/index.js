@@ -9,5 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/api/v1/stolenCase', CaseController.stolenCaseReport);
+router.get('/api/v1/getAllCases', CaseController.getAllCases);
+
 
 module.exports = router;

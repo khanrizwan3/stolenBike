@@ -21,13 +21,24 @@ module.exports = {
         type: Sequelize.STRING
       },
       victim_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
       },
       officer_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
       },
       status: {
         type: Sequelize.INTEGER
+      },
+      status_reason: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
