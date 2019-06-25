@@ -37,14 +37,11 @@ async function stolenCaseReport(req,res){
 
 }
 
-
-
 async function getAllCases(req,res){
   let limit = null; // number of records per page
   let offset = 0;
 
   try {
-    
     const { page } = req.query; // page number
     if(parseInt(req.query.limit) > 0){
       limit = parseInt(req.query.limit);
@@ -71,7 +68,37 @@ async function getAllCases(req,res){
   }
 }
 
+async function resolveStolenReport(req,res){
+
+  try{
+
+    let caseData = await Case.findByPk(req.params.id); 
+    try {
+    
+      let result = await caseData.update({
+        title: req.body.title,
+        long_detail: req.body.long_detail,
+        location: req.body.location,
+        time_of_theft: req.body.time_of_theft,
+        victim_id: req.body.victim_id,
+        officer_id: caseData.officer_id,
+        status: req.body.status,
+        status_reason: req.body.status_reason,
+      });
+
+      return res.status(200).send(result);
+    
+    } catch(error){
+      res.status(400).send(error);
+    }
+        
+  } catch(error){
+    res.status(400).send(error);
+  }
+}
+
 module.exports = {
   stolenCaseReport,
+  resolveStolenReport,
   getAllCases
 };
